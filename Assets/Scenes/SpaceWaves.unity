@@ -2437,10 +2437,12 @@ MonoBehaviour:
   - {fileID: 974295689764996503, guid: f9e4b275daf1ca7499ed4ff91c5f0fac, type: 3}
   - {fileID: 7704884063178020877, guid: 18e623c3ff6bda5438b477b0f3b192c5, type: 3}
   - {fileID: 4002781322936463396, guid: b07da609d5c56b54d995be46dc4cbc5c, type: 3}
-  minX: 0
-  maxX: 5
+  minX: 2
+  maxX: 8
   yPos: -4.2
-  spawnInterval: 1.5
+  initialSpawnInterval: 1.5
+  minSpawnInterval: 0.6
+  difficultyIncreaseRate: 0.02
 --- !u!1 &2070171825
 GameObject:
   m_ObjectHideFlags: 0
