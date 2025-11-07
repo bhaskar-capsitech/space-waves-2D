@@ -20,10 +20,16 @@ public class PlayerController : MonoBehaviour
     private bool restartScheduled = false;
     private bool isRotating = false;
 
+    private AudioSource playerAudio;
+
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Physics2D.gravity = new Vector2(0, -9.81f * gravityModifier);
+        playerAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -35,6 +41,7 @@ public class PlayerController : MonoBehaviour
                  && isGrounded)
             {
                 Jump();
+                playerAudio.PlayOneShot(jumpSound, 1.0f);
             }
         }
         else if (!restartScheduled)
@@ -98,7 +105,11 @@ public class PlayerController : MonoBehaviour
                 explosionParticle.Play();
 
             if (dirtParticle != null)
-                dirtParticle.Stop();
+            {
+               dirtParticle.Stop();
+            }
+            
+            playerAudio.PlayOneShot(crashSound, 1.0f);
 
             gameOver = true;
         }
