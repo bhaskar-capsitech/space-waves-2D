@@ -20,11 +20,10 @@ public class BackgroundScroller : MonoBehaviour
 
             transform.Translate(Vector3.left * scrollSpeed * Time.deltaTime);
 
-            // If the background moved completely off-screen, reposition it to the right
             if (transform.position.x <= -width)
             {
                 Vector3 newPos = transform.position;
-                newPos.x += width * 2; // move it after the next tile
+                newPos.x += width * 2; 
                 transform.position = newPos;
             }
         }

@@ -11,13 +11,11 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text highScoreText;
     void Awake()
     {
-        // Singleton pattern for easy access
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
 
-        // Load high score from PlayerPrefs
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         UpdateHighScoreUI();
     }

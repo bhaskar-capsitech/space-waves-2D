@@ -8,7 +8,6 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        // Ensure only one AudioManager exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -17,8 +16,7 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // Restore saved audio state (optional)
+       
         isMuted = PlayerPrefs.GetInt("Muted", 0) == 1;
         ApplyMuteState();
     }

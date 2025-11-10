@@ -15,19 +15,16 @@ public class MoveLeft : MonoBehaviour
 
     void Update()
     {
-        // Move obstacles only while game is active
         if (playerControllerScript != null && !playerControllerScript.gameOver)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
 
-        // Destroy obstacle when it goes off screen
         if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
         }
 
-        // Give score when obstacle passes the player
         if (!hasScored &&
             transform.position.x < playerControllerScript.transform.position.x &&
             gameObject.CompareTag("Obstacle"))

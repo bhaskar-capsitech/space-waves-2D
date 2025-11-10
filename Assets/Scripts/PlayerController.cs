@@ -6,13 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private bool isGrounded = true;
+
     public bool gameOver = false;
 
-    [Header("Particles")]
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
 
-    [Header("Jump Settings")]
     public float jumpForce = 16f;
     public float gravityModifier = 2.25f;
     public float rotationDuration = 0.15f;

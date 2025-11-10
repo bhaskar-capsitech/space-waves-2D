@@ -2,18 +2,15 @@
 
 public class SpawnManager : MonoBehaviour
 {
-    [Header("Obstacle Settings")]
     public GameObject[] obstacles;
     public float minX = 2f;
     public float maxX = 8f;
     public float yPos = -4.2f;
 
-    [Header("Spawn Timing")]
     public float initialSpawnInterval = 1.7f;
     public float minSpawnInterval = 1f;  // Minimum interval (maximum difficulty)
     public float difficultyIncreaseRate = 0.01f; // How quickly difficulty increases (smaller = slower)
 
-    [Header("Initial Delay")]
     public float firstSpawnDelay = 0.3f; // small delay before first spawn
 
     private float currentSpawnInterval;
@@ -27,7 +24,6 @@ public class SpawnManager : MonoBehaviour
 
         currentSpawnInterval = initialSpawnInterval;
 
-        // 👇 instead of spawning immediately, wait for a short delay
         nextSpawnTime = Time.time + firstSpawnDelay;
     }
 
