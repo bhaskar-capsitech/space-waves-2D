@@ -25,9 +25,7 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (!hasScored &&
-            transform.position.x < playerControllerScript.transform.position.x &&
-            gameObject.CompareTag("Obstacle"))
+        if (!hasScored && transform.position.x < playerControllerScript.transform.position.x && gameObject.CompareTag("Obstacle"))
         {
             hasScored = true;
             if (ScoreManager.instance != null)

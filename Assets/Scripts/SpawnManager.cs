@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
     public float yPos = -4.2f;
 
     public float initialSpawnInterval = 1.7f;
-    public float minSpawnInterval = 1f;  // Minimum interval (maximum difficulty)
+    public float minSpawnInterval = 1.2f;  // Minimum interval (maximum difficulty)
     public float difficultyIncreaseRate = 0.01f; // How quickly difficulty increases (smaller = slower)
 
     public float firstSpawnDelay = 0.3f; // small delay before first spawn

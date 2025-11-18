@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,28 +20,37 @@ public class PlayerController : MonoBehaviour
     private bool restartScheduled = false;
     private bool isRotating = false;
 
-    private AudioSource playerAudio;
-
-    public AudioClip jumpSound;
-    public AudioClip crashSound;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Physics2D.gravity = new Vector2(0, -9.81f * gravityModifier);
-        playerAudio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         if (!gameOver)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) ||
-                 (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-                 && isGrounded)
+            bool jumpPressed = false;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                jumpPressed = true;
+
+            
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject() && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    jumpPressed = true;
+                }
+            }
+
+            if (jumpPressed && isGrounded)
             {
                 Jump();
-                playerAudio.PlayOneShot(jumpSound, 1.0f);
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlayJump();
+                }
             }
         }
         else if (!restartScheduled)
@@ -59,7 +69,6 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
 
         isGrounded = false;
-
 
         if (!isRotating)
             StartCoroutine(Rotate90Degrees());
@@ -93,7 +102,6 @@ public class PlayerController : MonoBehaviour
 
             isGrounded = true;
 
-
             transform.rotation = Quaternion.identity;
         }
 
@@ -104,11 +112,10 @@ public class PlayerController : MonoBehaviour
                 explosionParticle.Play();
 
             if (dirtParticle != null)
-            {
                dirtParticle.Stop();
-            }
             
-            playerAudio.PlayOneShot(crashSound, 1.0f);
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayCrash();
 
             gameOver = true;
         }

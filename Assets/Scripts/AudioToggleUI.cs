@@ -3,29 +3,49 @@ using UnityEngine.UI;
 
 public class AudioToggleUI : MonoBehaviour
 {
-    public Button audioOnButton;
-    public Button audioOffButton;
+    public Button musicOnBtn;
+    public Button musicOffBtn;
+    public Button soundOnBtn;
+    public Button soundOffBtn;
 
-    void Start()
+    private void Start()
     {
-        audioOnButton.onClick.AddListener(() => SetAudio(true));
-        audioOffButton.onClick.AddListener(() => SetAudio(false));
+        musicOnBtn.onClick.AddListener(() => SetMusic(false));
+        musicOffBtn.onClick.AddListener(() => SetMusic(true));
 
-        UpdateButtons();
+        soundOnBtn.onClick.AddListener(() => SetSound(false));
+        soundOffBtn.onClick.AddListener(() => SetSound(true));
+
+        UpdateMusicUI();
+        UpdateSoundUI();
     }
 
-    void SetAudio(bool on)
+    private void SetMusic(bool status)
     {
-        AudioManager.Instance.SetMute(!on);
-        UpdateButtons();
+        AudioManager.Instance.SetMusic(status);
+        UpdateMusicUI();
     }
 
-    void UpdateButtons()
+    private void SetSound(bool status)
     {
+        AudioManager.Instance.SetSound(status);
+        UpdateSoundUI();
+    }
 
-        bool isMuted = AudioManager.Instance.IsMuted();
-        audioOnButton.gameObject.SetActive(isMuted);
-        audioOffButton.gameObject.SetActive(!isMuted);
+    private void UpdateMusicUI()
+    {
+        bool isOn = AudioManager.Instance.isMusicOn;
 
+        musicOnBtn.gameObject.SetActive(isOn);  
+        musicOffBtn.gameObject.SetActive(!isOn);  
+    }
+
+    private void UpdateSoundUI()
+    {
+        bool isOn = AudioManager.Instance.isSoundOn;
+
+        soundOnBtn.gameObject.SetActive(isOn);   
+        soundOffBtn.gameObject.SetActive(!isOn);  
     }
 }
+

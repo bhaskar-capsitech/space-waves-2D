@@ -4,45 +4,69 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    private bool isMuted = false;
+    public AudioSource bgMusicSource;
+    public AudioSource effectsSource; 
+    public AudioClip crashSound;
+    public AudioClip jumpSound;
 
-    void Awake()
+    public bool isMusicOn = true;
+    public bool isSoundOn = true;
+
+    private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
         {
             Destroy(gameObject);
-            return;
         }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-       
-        isMuted = PlayerPrefs.GetInt("Muted", 0) == 1;
-        ApplyMuteState();
     }
 
-    public void ToggleMute()
+    private void Start()
     {
-        isMuted = !isMuted;
-        ApplyMuteState();
-        PlayerPrefs.SetInt("Muted", isMuted ? 1 : 0);
+        if (isMusicOn)
+        {
+            SetMusic(true);
+        }
     }
 
-    public void SetMute(bool mute)
+    public void SetMusic(bool status)
     {
-        isMuted = mute;
-        ApplyMuteState();
-        PlayerPrefs.SetInt("Muted", isMuted ? 1 : 0);
+        isMusicOn = status;
+
+        if (bgMusicSource == null) return;
+
+        if (status)
+        {
+            if (!bgMusicSource.isPlaying)
+                bgMusicSource.Play();
+        }
+        else
+        {
+            bgMusicSource.Stop();
+        }
     }
 
-    private void ApplyMuteState()
+    public void SetSound(bool status)
     {
-        AudioListener.volume = isMuted ? 0f : 1f;
+        isSoundOn = status;
+
+        if (effectsSource != null)
+            effectsSource.volume = status ? 1f : 0f;
     }
 
-    public bool IsMuted()
+    public void PlayCrash()
     {
-        return isMuted;
+        if (isSoundOn && effectsSource != null && crashSound != null)
+            effectsSource.PlayOneShot(crashSound, 1.0f);
+    }
+
+    public void PlayJump()
+    {
+        if (isSoundOn && effectsSource != null && jumpSound != null)
+            effectsSource.PlayOneShot(jumpSound, 1.0f);
     }
 }
-
