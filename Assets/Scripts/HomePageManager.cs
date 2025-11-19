@@ -26,6 +26,11 @@ public class HomePageManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("SpaceWaves");
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonSound();
+        }
     }
 
     public void onClickOfSetting()
@@ -33,6 +38,11 @@ public class HomePageManager : MonoBehaviour
         settingButton.SetActive(false);
         crossButton.SetActive(true);
         menuPanel.SetActive(true);
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonSound();
+        }
     }
 
     public void onClickOfCross()
@@ -40,5 +50,10 @@ public class HomePageManager : MonoBehaviour
         crossButton.SetActive(false);
         settingButton.SetActive(true);
         menuPanel.SetActive(false);
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonSound();
+        }
     }
 }

@@ -5,9 +5,10 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     public AudioSource bgMusicSource;
-    public AudioSource effectsSource; 
+    public AudioSource effectsSource;
     public AudioClip crashSound;
     public AudioClip jumpSound;
+    public AudioClip buttonSound;
 
     public bool isMusicOn = true;
     public bool isSoundOn = true;
@@ -68,5 +69,13 @@ public class AudioManager : MonoBehaviour
     {
         if (isSoundOn && effectsSource != null && jumpSound != null)
             effectsSource.PlayOneShot(jumpSound, 1.0f);
+    }
+
+    public void PlayButtonSound()
+    {
+        if (isSoundOn && effectsSource != null && buttonSound != null)
+        {
+            effectsSource.PlayOneShot(buttonSound, 1.0f);
+        }
     }
 }

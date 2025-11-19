@@ -21,11 +21,13 @@ public class GameControl : MonoBehaviour
         pauseButton.SetActive(false);
         resumeButton.SetActive(true);
         pausePanel.SetActive(true);
-       
+
         if (AudioManager.Instance != null)
         {
-            musicBeforePause = AudioManager.Instance.isMusicOn; 
-            AudioManager.Instance.SetMusic(false); 
+            musicBeforePause = AudioManager.Instance.isMusicOn;
+            AudioManager.Instance.SetMusic(false);
+            
+            AudioManager.Instance.PlayButtonSound(); 
         }
     }
 
@@ -35,24 +37,36 @@ public class GameControl : MonoBehaviour
         pauseButton.SetActive(true);
         pausePanel.SetActive(false);
 
-        if (AudioManager.Instance != null && musicBeforePause)
+        if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.SetMusic(true); 
+            if (musicBeforePause)
+            {
+                AudioManager.Instance.SetMusic(true);
+            }
+            AudioManager.Instance.PlayButtonSound();
         }
     }
 
     public void Home()
     {
         Time.timeScale = 1f;
-        if (AudioManager.Instance != null && musicBeforePause)
+        if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.SetMusic(true);
+            if (musicBeforePause)
+            {
+                AudioManager.Instance.SetMusic(true);
+            }
+            AudioManager.Instance.PlayButtonSound();
         }
         SceneManager.LoadScene("HomePage");
     }
 
     public void QuitGame()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonSound();
+        }
         Application.Quit();
     }
 }
