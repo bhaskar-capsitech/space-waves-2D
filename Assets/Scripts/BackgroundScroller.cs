@@ -3,19 +3,18 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     public float scrollSpeed = 5f;
+    public PlayerController playerController;
 
     private float width;
-    private PlayerController playerControllerScript;
-
+   
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         width = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     void Update()
     {
-        if (playerControllerScript != null && !playerControllerScript.gameOver)
+        if (playerController != null && !playerController.gameOver)
         {
 
             transform.Translate(Vector3.left * scrollSpeed * Time.deltaTime);

@@ -10,14 +10,15 @@ public class HomePageManager : MonoBehaviour
     public GameObject settingButton;
     public GameObject crossButton;
 
-    public TMP_Text bestScoreText;
+    public TMP_Text highScoreText;
     public GameObject menuPanel;
 
     private void Start()
     {
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
-        if (bestScoreText != null)
-            bestScoreText.text = "Best Score: " + highScore.ToString();
+
+        if (highScoreText != null)
+            highScoreText.text = "High Score: " + highScore;
 
         startButton.onClick.AddListener(StartGame);
     }
@@ -28,9 +29,7 @@ public class HomePageManager : MonoBehaviour
         SceneManager.LoadScene("SpaceWaves");
 
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlayButtonSound();
-        }
     }
 
     public void onClickOfSetting()
@@ -40,9 +39,7 @@ public class HomePageManager : MonoBehaviour
         menuPanel.SetActive(true);
 
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlayButtonSound();
-        }
     }
 
     public void onClickOfCross()
@@ -52,8 +49,6 @@ public class HomePageManager : MonoBehaviour
         menuPanel.SetActive(false);
 
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlayButtonSound();
-        }
     }
 }

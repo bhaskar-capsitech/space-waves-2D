@@ -7,8 +7,10 @@ public class ScoreManager : MonoBehaviour
 
     public int score = 0;
     public int highScore = 0;
+
     public TMP_Text scoreText;
     public TMP_Text highScoreText;
+
     void Awake()
     {
         if (instance == null)
@@ -37,7 +39,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + score.ToString();
+            scoreText.text = "Score: " + score;
         }
     }
 
@@ -45,7 +47,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (highScoreText != null)
         {
-            highScoreText.text = "Best Score: " + highScore.ToString();
+            highScoreText.text = "High Score: " + highScore;
         }
     }
 

@@ -16,11 +16,11 @@ public class SpawnManager : MonoBehaviour
     private float currentSpawnInterval;
     private float timeSinceStart;
     private float nextSpawnTime;
-    private PlayerController playerControllerScript;
+    private PlayerController playerController;
 
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         currentSpawnInterval = initialSpawnInterval;
 
@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (playerControllerScript != null && playerControllerScript.gameOver)
+        if (playerController != null && playerController.gameOver)
             return;
 
         if (Time.time >= nextSpawnTime)
@@ -47,8 +47,8 @@ public class SpawnManager : MonoBehaviour
         int index = Random.Range(0, obstacles.Length);
         GameObject obstacleToSpawn = obstacles[index];
 
-        float randomX = Random.Range(minX, maxX);
-        Vector2 spawnPosition = new Vector2(randomX, yPos);
+        float xPos = Random.Range(minX, maxX);
+        Vector2 spawnPosition = new Vector2(xPos, yPos);
 
         Instantiate(obstacleToSpawn, spawnPosition, Quaternion.identity);
     }

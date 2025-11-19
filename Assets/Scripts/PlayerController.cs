@@ -76,10 +76,10 @@ public class PlayerController : MonoBehaviour
         jumpCount++;       
 
         if (!isRotating)
-            StartCoroutine(Rotate90Degrees());
+            StartCoroutine(RotatePlayer());
     }
 
-    IEnumerator Rotate90Degrees()
+    IEnumerator RotatePlayer()
     {
         isRotating = true;
 
@@ -102,24 +102,23 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
-            if (dirtParticle != null)
-                dirtParticle.Play();
-
             isGrounded = true;
-
-            jumpCount = 0;       
-
+            jumpCount = 0;
             transform.rotation = Quaternion.identity;
+
+            if (dirtParticle != null && isGrounded && jumpCount == 0)
+                dirtParticle.Play();
         }
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Collision with obstacle");
-            if (explosionParticle != null)
-                explosionParticle.Play();
 
             if (dirtParticle != null)
                 dirtParticle.Stop();
+
+            if (explosionParticle != null)
+                explosionParticle.Play();
 
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayCrash();

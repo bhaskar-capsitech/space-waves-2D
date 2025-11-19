@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fb63ca23209b94f6c82919e63789af77
+guid: d5c89bf078e10154eb8c2f46e10ef599
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -21,10 +21,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 325160
-  packageName: Buttons, Slides, Dings and Drops
-  packageVersion: 1.0
-  assetPath: Assets/Buttons, Slides, Dings and Drops/Audio/UI/Chord11.wav
-  uploadId: 770899

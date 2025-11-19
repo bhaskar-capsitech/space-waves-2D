@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    private float leftBound = -16f;
-    private PlayerController playerControllerScript;
+    public float speed = 15f;
 
-    public float speed = 5f;
+    private float leftBound = -16f;
+    private PlayerController playerController;
 
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     void Update()
     {
-        if (playerControllerScript != null && !playerControllerScript.gameOver)
+        if (playerController != null && !playerController.gameOver)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }

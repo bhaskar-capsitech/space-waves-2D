@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource bgMusicSource;
     public AudioSource effectsSource;
+
     public AudioClip crashSound;
     public AudioClip jumpSound;
     public AudioClip buttonSound;
@@ -21,17 +22,13 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
         if (isMusicOn)
-        {
             SetMusic(true);
-        }
     }
 
     public void SetMusic(bool status)
@@ -46,17 +43,22 @@ public class AudioManager : MonoBehaviour
                 bgMusicSource.Play();
         }
         else
-        {
             bgMusicSource.Stop();
-        }
     }
 
     public void SetSound(bool status)
     {
         isSoundOn = status;
 
-        if (effectsSource != null)
-            effectsSource.volume = status ? 1f : 0f;
+        if (effectsSource == null) return;
+
+        if (status)
+        {
+            if (!effectsSource.isPlaying)
+                effectsSource.Play();
+        }
+        else
+            effectsSource.Stop();
     }
 
     public void PlayCrash()
@@ -74,8 +76,6 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonSound()
     {
         if (isSoundOn && effectsSource != null && buttonSound != null)
-        {
             effectsSource.PlayOneShot(buttonSound, 1.0f);
-        }
     }
 }
