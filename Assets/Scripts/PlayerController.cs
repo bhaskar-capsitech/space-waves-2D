@@ -5,20 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private bool isGrounded = true;
+    public float jumpForce = 16f;
+    public float gravityModifier = 2.25f;
+    public float rotationDuration = 0.15f;
 
     public bool gameOver = false;
 
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
 
-    public float jumpForce = 16f;
-    public float gravityModifier = 2.25f;
-    public float rotationDuration = 0.15f;
+    private Rigidbody2D rb;
+
+    private int jumpCount = 0;
+    private int maxJumps = 2;
+    private bool isGrounded = true;
 
     private bool restartScheduled = false;
     private bool isRotating = false;
+
+
 
     void Start()
     {
@@ -35,22 +40,20 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
                 jumpPressed = true;
 
-            
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!EventSystem.current.IsPointerOverGameObject() && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                if (!EventSystem.current.IsPointerOverGameObject() &&
+                    !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
                     jumpPressed = true;
                 }
             }
 
-            if (jumpPressed && isGrounded)
+            if (jumpPressed && jumpCount < maxJumps)
             {
                 Jump();
                 if (AudioManager.Instance != null)
-                {
                     AudioManager.Instance.PlayJump();
-                }
             }
         }
         else if (!restartScheduled)
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
 
         isGrounded = false;
+
+        jumpCount++;       
 
         if (!isRotating)
             StartCoroutine(Rotate90Degrees());
@@ -102,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
             isGrounded = true;
 
+            jumpCount = 0;       
+
             transform.rotation = Quaternion.identity;
         }
 
@@ -112,8 +119,8 @@ public class PlayerController : MonoBehaviour
                 explosionParticle.Play();
 
             if (dirtParticle != null)
-               dirtParticle.Stop();
-            
+                dirtParticle.Stop();
+
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayCrash();
 
@@ -126,5 +133,3 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-
-
